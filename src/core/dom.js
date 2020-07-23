@@ -20,6 +20,14 @@ class Dom {
     return this
   }
 
+  text(text) {
+    if (typeof text === 'string') {
+      this.$el.textContent = text
+      return this
+    }
+    return this.$el.textContent
+  }
+
   on(eventType, callback) {
     this.$el.addEventListener(eventType, callback)
   }
@@ -28,8 +36,40 @@ class Dom {
     this.$el.removeEventListener(eventType, callback)
   }
 
+  find(selector) {
+    return $(this.$el.querySelector(selector))
+  }
+
   closest(selector) {
     return $(this.$el.closest(selector))
+  }
+
+  addClass(className) {
+    this.$el.classList.add(className)
+  }
+
+  removeClass(className) {
+    this.$el.classList.remove(className)
+  }
+
+  focus() {
+    this.$el.focus()
+    return this
+  }
+
+  attr(attrName) {
+    return this.$el.getAttribute(attrName)
+  }
+
+  id(parse) {
+    if (parse) {
+      const parsed = this.id().split(':')
+      return {
+        row: +parsed[0],
+        collumn: +parsed[1],
+      }
+    }
+    return this.data.id
   }
 
   getCoords() {

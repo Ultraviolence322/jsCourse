@@ -20,7 +20,7 @@ function createRow(info, data) {
 
 function createCell(index) {
   return `
-  <div class="cell" contenteditable data-collumn="${index}"></div>
+  <div class="cell" contenteditable data-collumn="${index}" data-id="-1:${index}" data-type="cell"></div>
   `
 }
 
@@ -35,7 +35,7 @@ function createCollumn(data, index) {
   `
 }
 
-export function createTable(rowsCount = 25, collumnCount = 55) {
+export function createTable(rowsCount = 25, collumnCount = 26) {
   let html = ``
   let collumns = ``
   let cells = ``
@@ -46,6 +46,9 @@ export function createTable(rowsCount = 25, collumnCount = 55) {
   }
   html += createRow('', collumns)
   for (let i = 0; i < rowsCount; i++) {
+    for (let j = 0; j < collumnCount; j++) {
+      cells = cells.replace(`id="${i - 1}`, `id="${i}`)
+    }
     html += createRow(i + 1, cells)
   }
 
