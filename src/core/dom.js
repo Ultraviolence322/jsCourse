@@ -21,11 +21,20 @@ class Dom {
   }
 
   text(text) {
-    if (typeof text === 'string') {
-      this.$el.textContent = text
-      return this
+    if (this.$el.tagName.toLowerCase() === 'input') {
+      if (typeof text === 'string') {
+        this.$el.value = text
+        return this
+      }
+      return this.$el.value
+    } else {
+      if (typeof text !== 'undefined') {
+        this.$el.textContent = text
+        return this
+      }
+      return this.$el.textContent
     }
-    return this.$el.textContent
+
   }
 
   on(eventType, callback) {
@@ -57,7 +66,11 @@ class Dom {
     return this
   }
 
-  attr(attrName) {
+  attr(attrName, val) {
+    if (val) {
+      this.$el.setAttribute(attrName, val)
+      return this
+    }
     return this.$el.getAttribute(attrName)
   }
 
@@ -74,6 +87,13 @@ class Dom {
 
   getCoords() {
     return this.$el.getBoundingClientRect()
+  }
+
+  getStyles(styles = []) {
+    return styles.reduce((res, s) => {
+      res[s] = this.$el.style[s]
+      return res
+    }, {})
   }
 
   append(node) {

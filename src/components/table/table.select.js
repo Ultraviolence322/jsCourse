@@ -1,6 +1,7 @@
 import { $ } from "@core/dom";
+import { defaultStyles } from "@/scss/constants";
 
-export function selectHandler(e, root) {
+export function selectHandler(e, root, actions) {
   if (e.shiftKey) {
     let ids = []
 
@@ -40,5 +41,8 @@ export function selectHandler(e, root) {
     const $cell = $(e.target)
     root.selection.select($cell)
     root.$emit('table:select', $cell)
+    const styles = $cell.getStyles(Object.keys(defaultStyles))
+    console.log('ss', styles)
+    root.$dispatch(actions.changeStyles(styles))
   }
 }
