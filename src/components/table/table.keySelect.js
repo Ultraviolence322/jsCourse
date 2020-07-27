@@ -1,5 +1,6 @@
+import { defaultStyles } from "@/scss/constants";
 
-export function keySelect(e, root) {
+export function keySelect(e, root, actions) {
   const keys = ['Enter', 'Tab', 'ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight']
   const { key } = e
   if (keys.includes(key)) {
@@ -12,6 +13,9 @@ export function keySelect(e, root) {
       const $next = root.$root.find(nextSelection(key, id))
       root.selection.select($next)
       root.$emit('table:select', $next)
+      const styles = $next.getStyles(Object.keys(defaultStyles))
+      console.log('ss', styles)
+      root.$dispatch(actions.changeStyles(styles))
     }
 
   }
